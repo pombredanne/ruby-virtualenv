@@ -1,58 +1,57 @@
-
 # This file must be used with "source bin/activate" *from bash*
 # you cannot run it directly
 
 forget_cached_commands () {
-    
+
     # This should detect bash and zsh, which have a hash command that must
     # be called to get it to forget past commands.  Without forgetting
     # past commands the $PATH changes we made may not be respected
     if [ -n "$BASH" -o -n "$ZSH_VERSION" ] ; then
         hash -r
     fi
-    
+
 }
 
 deactivate_sandbox () {
-    
+
     if [ -n "$_OLD_SANDBOX_GEM_HOME" ] ; then
         GEM_HOME="$_OLD_SANDBOX_GEM_HOME"
         export GEM_HOME
     else
         unset GEM_HOME
     fi
-    
+
     if [ -n "$_OLD_SANDBOX_GEM_PATH" ] ; then
         GEM_PATH="$_OLD_SANDBOX_GEM_PATH"
         export GEM_PATH
     else
         unset GEM_PATH
     fi
-    
+
     if [ -n "$_OLD_SANDBOX_PATH" ] ; then
         PATH="$_OLD_SANDBOX_PATH"
         export PATH
     fi
-    
+
     if [ -n "$_OLD_SANDBOX_HOME" ] ; then
         HOME="$_OLD_SANDBOX_HOME"
         export HOME
     fi
-    
+
     if [ -n "$_OLD_SANDBOX_PS1" ] ; then
         PS1="$_OLD_SANDBOX_PS1"
         export PS1
     fi
-    
+
     unset _OLD_SANDBOX_PATH
     unset _OLD_SANDBOX_HOME
     unset _OLD_SANDBOX_GEM_HOME
     unset _OLD_SANDBOX_GEM_PATH
     unset _OLD_SANDBOX_PS1
     unset SANDBOX_ENV
-    
+
     forget_cached_commands
-    
+
     if [ ! "$1" = "nondestructive" ] ; then
         # Self destruct!
         unset deactivate_sandbox
@@ -60,9 +59,8 @@ deactivate_sandbox () {
     fi
 }
 
-
 activate_sandbox () {
-    
+
     # unset irrelavent variables
     deactivate_sandbox nondestructive
 
@@ -72,7 +70,7 @@ activate_sandbox () {
     _OLD_SANDBOX_PATH="$PATH"
     _OLD_SANDBOX_HOME="$HOME"
     _OLD_SANDBOX_PS1="$PS1"
-    
+
     # set the sandbox-aware states
     SANDBOX_ENV="<%= target %>"
     PATH="$SANDBOX_ENV/bin:$PATH"
@@ -86,19 +84,15 @@ activate_sandbox () {
     else
         PS1="(sandbox:`basename \"$SANDBOX_ENV\"`)$PS1"
     fi
-    
-    export SANDBOX_ENV PATH HOME GEM_HOME GEM_PATH PS1
-    
-    forget_cached_commands
-    
-    unset activate_sandbox
-    
-}
 
+    export SANDBOX_ENV PATH HOME GEM_HOME GEM_PATH PS1
+
+    forget_cached_commands
+
+    unset activate_sandbox
+
+}
 
 activate_sandbox
 
-
-# 
-# Thanks to the virtualenv developers ( http://pypi.python.org/pypi/virtualenv )
-# 
+# Thanks to the virtualenv developers (http://pypi.python.org/pypi/virtualenv)
