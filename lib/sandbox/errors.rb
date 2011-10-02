@@ -14,8 +14,7 @@ module Sandbox
   end
 
   class LoadedSandboxError < Sandbox::Error
-    def initialize(msg=nil)
-      msg ||= "You cannot run sandbox from a loaded sandbox environment"
+    def initialize(msg="You cannot run sandbox from a loaded sandbox environment")
       super(msg)
     end
   end
