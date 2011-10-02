@@ -80,9 +80,9 @@ activate () {
     if [ "`basename \"$SANDBOX_ENV\"`" = "__" ] ; then
         # special case for Aspen magic directories
         # see http://www.zetadev.com/software/aspen/
-        PS1="[sandbox:`basename \`dirname \"$SANDBOX_ENV\"\``] $PS1"
+        PS1="[ruby-virtualenv:`basename \`dirname \"$SANDBOX_ENV\"\``] $PS1"
     else
-        PS1="(sandbox:`basename \"$SANDBOX_ENV\"`)$PS1"
+        PS1="(ruby-virtualenv:`basename \"$SANDBOX_ENV\"`) $PS1"
     fi
 
     export SANDBOX_ENV PATH HOME GEM_HOME GEM_PATH PS1
