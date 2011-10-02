@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["nkryptic@gmail.com", "francesc.esplugas@gmail.com"]
   gem.description   = %q{Create virtual ruby/rubygems environments.}
   gem.summary       = %q{Create virtual ruby/rubygems environments.}
-  gem.homepage      = "http://github.com/fesplugas/ruby-virtualenv"
+  gem.homepage      = "https://github.com/fesplugas/ruby-virtualenv"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
