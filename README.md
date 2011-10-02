@@ -26,24 +26,25 @@ When you want to leave the environment:
 
     $ deactivate
 
-NOTES:
-------
+Notes
+-----
 
 * It creates an environment that has its own installation directory for Gems.
 * It doesn't share gems with other sandbox environments.
 * It (optionally) doesn't use the globally installed gems either.
 * It will use a local to the sandbox .gemrc file
 
-FEATURES/PROBLEMS:
-------------------
+Features / Problems
+-------------------
 
-Activating your sandbox environment will change your HOME directory
-temporarily to the sandbox directory. Other environment variables are
-set to enable this funtionality, so if you may experience odd behavior.
-Everything should be reset when you deactivate the sandbox.
+* Activating your sandbox environment will change your HOME directory
+  temporarily to the sandbox directory.
+* Other environment variables are set to enable this funtionality, so if
+  you may experience odd behavior.
+* Everything should be reset when you deactivate the sandbox.
 
-USAGE:
-------
+Usage
+-----
 
 Create a new virtualenv (verbose output by default):
 
@@ -68,19 +69,13 @@ Create a new sandbox with specific gems:
       gem: rake
       gem: rails
 
-REQUIREMENTS:
--------------
-
-* ruby
-* rubygems
-
-INSTALL:
---------
+Install
+-------
 
     $ gem install ruby-virtualenv
 
-LICENSE:
---------
+License
+-------
 
     (The MIT License)
 
