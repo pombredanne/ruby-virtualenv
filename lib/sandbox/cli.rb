@@ -66,9 +66,9 @@ module Sandbox
       targets = options.delete(:args)
 
       if targets.size < 1
-        raise Sandbox::Error.new('no target specified - see `ruby-virtualenv --help` for assistance')
+        raise Sandbox::Error.new('No target specified. See `ruby-virtualenv -h` for assistance.')
       elsif targets.size > 1
-        raise Sandbox::Error.new('multiple targets specified - see `ruby-virtualenv --help` for assistance')
+        raise Sandbox::Error.new('Multiple targets specified. See `ruby-virtualenv -h` for assistance.')
       end
 
       options[:target] = targets[0]
