@@ -73,9 +73,7 @@ module Sandbox
     end
 
     def install_gems
-      # gem = `which gem`.chomp
-      # return if gem.empty?
-      gems = options[ :gems ] || []
+      gems = options[:gems] || []
       if gems.size == 0
         tell("  nothing to install")
         return
@@ -130,7 +128,8 @@ module Sandbox
           raise "something is seriously wrong; we should never get here"
         end
       end
-      return path
+
+      path
     end
 
     def check_path!(path)
