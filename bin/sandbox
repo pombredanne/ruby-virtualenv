@@ -3,4 +3,4 @@
 $:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(__FILE__) + '/../lib')
 
 require 'sandbox/cli'
-Sandbox::CLI.execute( ARGV )
+Sandbox::CLI.execute(ARGV)
