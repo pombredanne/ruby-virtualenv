@@ -69,7 +69,7 @@ activate () {
     PATH="$SANDBOX_ENV/bin:$PATH"
     GEM_HOME="$SANDBOX_ENV/rubygems"
     GEM_PATH="$GEM_HOME"
-    PS1="(ruby-virtualenv:`basename \"$SANDBOX_ENV\"`) $PS1"
+    PS1="(`basename \"$SANDBOX_ENV\"`) $PS1"
 
     export SANDBOX_ENV PATH GEM_HOME GEM_PATH PS1
 
