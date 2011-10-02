@@ -80,13 +80,12 @@ module Sandbox
         tell("  nothing to install")
         return
       end
-      
+
       begin
         setup_sandbox_env
         gems.each do |gem|
           tell_unless_really_quiet("  gem: #{gem}")
           cmd = "gem install #{gem}"
-          # cmd = cmd + ' -V' if Sandbox.really_verbose?
           status, output = shell_out(cmd)
           unless status
             tell_unless_really_quiet("    failed to install gem: #{gem}")
@@ -96,41 +95,34 @@ module Sandbox
         restore_sandbox_env
       end
     end
-    
+
     def shell_out(cmd)
-      # err_capture = Sandbox.really_verbose? '2>&1' : '2>/dev/null'
-      # out = `#{cmd} #{err_capture}`
       out = `#{cmd} 2>/dev/null`
       result = $?.exitstatus == 0
-      [ result, out ]
+      [result, out]
     end
-    
+
     def setup_sandbox_env
       @old_env = Hash[ *ENV.select { |k,v| ['HOME','GEM_HOME','GEM_PATH'].include?(k) }.flatten ]
-      # @old_env = {}
-      # @old_env[ 'HOME' ]      = ENV[ 'HOME' ]
-      # @old_env[ 'GEM_HOME' ]  = ENV[ 'GEM_HOME' ]
-      # @old_env[ 'GEM_PATH' ]  = ENV[ 'GEM_PATH' ]
-      
-      ENV[ 'HOME' ]     = target
-      ENV[ 'GEM_HOME' ] = "#{target}/rubygems"
-      ENV[ 'GEM_PATH' ] = "#{target}/rubygems"
+
+      ENV['HOME']     = target
+      ENV['GEM_HOME'] = "#{target}/rubygems"
+      ENV['GEM_PATH'] = "#{target}/rubygems"
     end
-    
+
     def restore_sandbox_env
       # ENV.update(@old_env)
-      ENV[ 'HOME' ]     = @old_env[ 'HOME' ]
-      ENV[ 'GEM_HOME' ] = @old_env[ 'GEM_HOME' ]
-      ENV[ 'GEM_PATH' ] = @old_env[ 'GEM_PATH' ]
+      ENV['HOME']     = @old_env['HOME']
+      ENV['GEM_HOME'] = @old_env['GEM_HOME']
+      ENV['GEM_PATH'] = @old_env['GEM_PATH']
     end
-    
+
     def resolve_target(path)
-      # should consider replacing with 'pathname' => Pathname.new(path)
       path = fix_path(path)
       if File.exists?(path)
         raise Sandbox::Error, "target '#{path}' exists"
       end
-      
+
       base = path
       while base = File.dirname(base)
         if check_path!(base)
@@ -141,7 +133,7 @@ module Sandbox
       end
       return path
     end
-    
+
     def check_path!(path)
       if File.directory?(path)
         if File.writable?(path)
@@ -154,7 +146,7 @@ module Sandbox
       end
       false
     end
-    
+
     def fix_path(path)
       unless path.index('/') == 0
         path = File.join(FileUtils.pwd, path)
@@ -162,14 +154,6 @@ module Sandbox
       path
     end
 
-    ## END PUBLIC INSTANCE METHODS
-
-
-    ## PRIVATE INSTANCE METHODS
-    private
-
-    ## END PRIVATE INSTANCE METHODS
-  
   end
-  
+
 end
