@@ -1,11 +1,14 @@
-= Sandbox
+Sandbox
+=======
 
 * http://github.com/nkryptic/sandbox
 
-== DESCRIPTION:
+DESCRIPTION:
+------------
 
-Inspired by Python's virtualenv[http://pypi.python.org/pypi/virtualenv] 
-project, Sandbox is a utility to create sandboxed Ruby/Rubygems environments.
+Inspired by Python's [virtualenv](http://pypi.python.org/pypi/virtualenv)
+project, Ruby-Virtualenv is a utility to create sandboxed Ruby/Rubygems
+environments.
 
 It is meant to address the following issues:
 
@@ -15,79 +18,86 @@ It is meant to address the following issues:
 * Ability to try gems out without installing into your global repository.
 * A Simple way to enable this.
 
-Running from your own gem repositories is fairly straight-forward, but 
-managing the necessary environment is a pain.  This utility will create a new
-environment which may be activated by the script `bin/activate` in your
-sandbox directory.
+Running from your own gem repositories is fairly straight-forward, but
+managing the necessary environment is a pain. This utility will create
+a new environment which may be activated by the script `bin/activate` in
+your sandbox directory.
 
 Run the script with the following to enable your new environment:
 
-  $ source bin/activate
+    $ source bin/activate
 
 When you want to leave the environment:
 
-  $ deactivate
+    $ deactivate
 
-== NOTES:
+NOTES:
+------
 
 * It creates an environment that has its own installation directory for Gems.
 * It doesn't share gems with other sandbox environments.
 * It (optionally) doesn't use the globally installed gems either.
 * It will use a local to the sandbox .gemrc file
 
-== FEATURES/PROBLEMS:
+FEATURES/PROBLEMS:
+------------------
 
 Activating your sandbox environment will change your HOME directory
 temporarily to the sandbox directory. Other environment variables are
 set to enable this funtionality, so if you may experience odd behavior.
 Everything should be reset when you deactivate the sandbox.
 
-== USAGE:
+USAGE:
+------
 
-Create a new sandbox (verbose output by default):
+Create a new virtualenv (verbose output by default):
 
-  $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox
-  creating new sandbox in /home/nkryptic/ruby-projects/my-new-sandbox
-  installing activation script
-  installing .gemrc
-  installing gems:
-    nothing to do
+    $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox
+    creating new sandbox in /home/nkryptic/ruby-projects/my-new-sandbox
+    installing activation script
+    installing .gemrc
+    installing gems:
+      nothing to do
 
 Create a new sandbox with no output:
 
-  $ cd ~/ruby-projects
-  $ sandbox my-new-sandbox -q
+    $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox -q
 
 Create a new sandbox with specific gems:
 
-  $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox -g rake,rails
-  creating new sandbox in /home/nkryptic/ruby-projects/my-new-sandbox
-  installing activation script
-  installing .gemrc
-  installing gems:
-    gem: rake
-    gem: rails
+    $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox -g rake,rails
+    creating new sandbox in /home/nkryptic/ruby-projects/my-new-sandbox
+    installing activation script
+    installing .gemrc
+    installing gems:
+      gem: rake
+      gem: rails
 
-== FUTURE PLANS:
+FUTURE PLANS:
+-------------
 
-I hope to expand the full version branch to allow for installing both rubygems
-and ruby as part of the sandbox.  This would enable experimentation with
-different versions of both and exclude the requirement on needing rubygems in
-the first place.
+I hope to expand the full version branch to allow for installing both
+rubygems and ruby as part of the sandbox. This would enable experimentation
+with different versions of both and exclude the requirement on needing
+rubygems in the first place.
 
-== REQUIREMENTS:
+REQUIREMENTS:
+-------------
 
 * ruby
 * rubygems
 
-== INSTALL:
+INSTALL:
+--------
 
-  sudo gem install ruby-virtualenv
+    $ gem install ruby-virtualenv
 
-== LICENSE:
+LICENSE:
+--------
 
 (The MIT License)
 
+Copyright (c) 2011 Francesc Esplugas
 Copyright (c) 2008 Jacob Radford
 
 Permission is hereby granted, free of charge, to any person obtaining
