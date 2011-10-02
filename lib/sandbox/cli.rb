@@ -1,106 +1,104 @@
-
 require 'optparse'
 require 'sandbox'
 
-module Sandbox  
+module Sandbox
   class CLI
     include Sandbox::Output
     extend Sandbox::Output
-    
+
     DEFAULTS = {
       # :gems => [ 'rake', ]
       :gems => []
     }
-    
+
     ## CLASS METHODS
     class << self
-      
+
       # invokes sandbox via command-line ARGV as the options
-      def execute( args = ARGV )
+      def execute(args = ARGV)
         verify_environment!
-        parse( args ).execute!
+        parse(args).execute!
       rescue Exception => error
-        handle_error( error )
+        handle_error(error)
       end
-      
+
       # returns a new CLI instance which has parsed the given arguments.
       # will load the command to execute based upon the arguements.
-      # if an error occurs, it will print out simple error message and exit 
-      def parse( args )
+      # if an error occurs, it will print out simple error message and exit.
+      def parse(args)
         cli = new
-        cli.parse_args!( args )
+        cli.parse_args!(args)
         cli
       end
-      
+
       def verify_environment!
-        raise LoadedSandboxError if ENV[ 'SANDBOX' ]
+        raise LoadedSandboxError if ENV['SANDBOX']
       end
-      
+
       # pretty error handling
-      def handle_error( error )
+      def handle_error(error)
         case error
           when Sandbox::Error
-            tell_unless_really_quiet( error.message )
+            tell_unless_really_quiet(error.message)
           when StandardError #, Timeout::Error
-            tell_unless_really_quiet( "Error: #{error.message}" )
-            tell_when_really_verbose( error.backtrace.collect { |bt| "    #{bt}" }.join( "\n" ) ) if error.backtrace
+            tell_unless_really_quiet("Error: #{error.message}")
+            tell_when_really_verbose(error.backtrace.collect { |bt| "    #{bt}" }.join( "\n" )) if error.backtrace
           when Interrupt
-            tell_unless_really_quiet( "Interrupted" )
+            tell_unless_really_quiet("Interrupted")
         else
           raise error
         end
       end
-      
+
     end
     ## END CLASS METHODS
-    
+
     ## PUBLIC INSTANCE METHODS
     public
-    
+
     # The options for this execution.
     attr_reader :options
-    
+
     # setup of a new CLI instance
     def initialize
       @options = DEFAULTS.dup
       @parser = nil
     end
-    
-    
+
     # perform the sandbox creation
     def execute!
-      targets = options.delete( :args )
-      
+      targets = options.delete(:args)
+
       if targets.size < 1
-        raise Sandbox::Error.new( 'no target specified - see `sandbox --help` for assistance' )
+        raise Sandbox::Error.new('no target specified - see `sandbox --help` for assistance')
       elsif targets.size > 1
-        raise Sandbox::Error.new( 'multiple targets specified - see `sandbox --help` for assistance' )
+        raise Sandbox::Error.new('multiple targets specified - see `sandbox --help` for assistance')
       end
-      
+
       options[ :target ] = targets[0]
-      
-      Sandbox::Installer.new( options ).populate
+
+      Sandbox::Installer.new(options).populate
     end
-    
+
     # processes +args+ to:
-    # 
+    #
     # * load global option for the application
     # * determine command name to lookup in CommandManager
     # * load command and have it process any add't options
     # * catches exceptions for unknown switches or commands
     def parse_args!( args )
-      options[ :original_args ] = args.dup
-      parser.parse!( args )
+      options[:original_args] = args.dup
+      parser.parse!(args)
     rescue OptionParser::ParseError => ex
-      raise_parse_error( ex.reason, ex.args )
+      raise_parse_error(ex.reason, ex.args)
     else
-      options[ :args ] = args
+      options[:args] = args
     end
-    
+
     def parser
       @parser ||= create_parser
     end
-    
+
     def create_parser
       OptionParser.new do |o|
         o.set_summary_indent('  ')
@@ -123,11 +121,7 @@ module Sandbox
         o.separator ""
       end
     end
-    
-    # def show_help
-    #   tell( parser )
-    # end
-    
+
     def long_help
       unindent( <<-HELP )
       --------------------------------------------------------------------------------
@@ -164,24 +158,17 @@ module Sandbox
         should be reset when you deactivate the sandbox.
       HELP
     end
-    
-    def unindent( output )
+
+    def unindent(output)
       indent = output[/\A\s*/]
       output.strip.gsub(/^#{indent}/, "")
     end
-    
-    ## END PUBLIC INSTANCE METHODS
-    
-    
-    ## PRIVATE INSTANCE METHODS
+
     private
-    
-    def raise_parse_error( reason, args=[] )
-        raise Sandbox::ParseError.new( reason, args )
-      end
-    
-    ## END PRIVATE INSTANCE METHODS
-    
+
+    def raise_parse_error(reason, args=[])
+      raise Sandbox::ParseError.new(reason, args)
+    end
+
   end
-  
 end
