@@ -33,15 +33,10 @@ Notes
 * It doesn't share gems with other sandbox environments.
 * It (optionally) doesn't use the globally installed gems either.
 * It will use a local to the sandbox .gemrc file
-
-Features / Problems
--------------------
-
 * Activating your sandbox environment will change your HOME directory
-  temporarily to the sandbox directory.
-* Other environment variables are set to enable this funtionality, so if
-  you may experience odd behavior.
-* Everything should be reset when you deactivate the sandbox.
+  temporarily to the sandbox directory. Other environment variables are
+  set to enable this funtionality, so if you may experience odd behavior.
+  Everything should be reset when you deactivate the sandbox.
 
 Usage
 -----
