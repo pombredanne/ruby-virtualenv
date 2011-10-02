@@ -21,12 +21,12 @@ environment which may be activated by the script `bin/activate` in your
 sandbox directory.
 
 Run the script with the following to enable your new environment:
-  
-  $ source bin/activate_sandbox
+
+  $ source bin/activate
 
 When you want to leave the environment:
-  
-  $ deactivate_sandbox
+
+  $ deactivate
 
 == NOTES:
 
@@ -38,15 +38,15 @@ When you want to leave the environment:
 == FEATURES/PROBLEMS:
 
 Activating your sandbox environment will change your HOME directory
-temporarily to the sandbox directory.  Other environment variables are set to
-enable this funtionality, so if you may experience odd behavior.  Everything
-should be reset when you deactivate the sandbox.
+temporarily to the sandbox directory. Other environment variables are
+set to enable this funtionality, so if you may experience odd behavior.
+Everything should be reset when you deactivate the sandbox.
 
 == USAGE:
 
 Create a new sandbox (verbose output by default):
-  $ cd ~/ruby-projects
-  $ sandbox my-new-sandbox
+
+  $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox
   creating new sandbox in /home/nkryptic/ruby-projects/my-new-sandbox
   installing activation script
   installing .gemrc
@@ -54,12 +54,13 @@ Create a new sandbox (verbose output by default):
     nothing to do
 
 Create a new sandbox with no output:
+
   $ cd ~/ruby-projects
   $ sandbox my-new-sandbox -q
 
 Create a new sandbox with specific gems:
-  $ cd ~/ruby-projects
-  $ sandbox my-new-sandbox -g rake,rails
+
+  $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox -g rake,rails
   creating new sandbox in /home/nkryptic/ruby-projects/my-new-sandbox
   installing activation script
   installing .gemrc
@@ -81,12 +82,7 @@ the first place.
 
 == INSTALL:
 
-  sudo gem install nkryptic-sandbox -s http://gems.github.com
-
-or
-
-  sudo gem sources --add http://gems.github.com
-  sudo gem install nkryptic-sandbox
+  sudo gem install ruby-virtualenv
 
 == LICENSE:
 

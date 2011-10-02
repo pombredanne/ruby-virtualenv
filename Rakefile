@@ -1,12 +1,14 @@
 require 'rubygems'
 require 'rake'
 
-require 'lib/sandbox' unless defined? Sandbox
- 
+require 'sandbox' unless defined?(Sandbox)
+
+=begin
+
 begin
   require 'echoe'
-  
-  Echoe.new( 'sandbox', Sandbox::Version::STRING ) do |p|  
+
+  Echoe.new('sandbox', Sandbox::Version::STRING) do |p|
     # p.rubyforge_name            = 'nkryptic'
     # p.summary                   = "Create virtual ruby/rubygems sandboxes."
     p.description               = "Create virtual ruby/rubygems sandboxes."
@@ -38,7 +40,7 @@ begin
   task :gemspec do
     Rake::Task[ 'build_gemspec' ].invoke
   end
-  
+
 rescue LoadError => boom
   puts <<-EOS
   You are missing a dependency required for meta-operations on this gem. Try:
@@ -49,8 +51,10 @@ EOS
   # puts "#{boom.to_s.capitalize}."
 end
 
+=end
+
 Dir[ "#{File.dirname(__FILE__)}/tasks/*.rake" ].sort.each { |ext| load ext }
- 
+
 # desc 'Generate RDoc documentation for Sandbox.'
 # Rake::RDocTask.new( :rdoc ) do |rdoc|
 #   files = [ 'README', 'LICENSE', 'lib/**/*.rb' ]
