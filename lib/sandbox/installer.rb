@@ -53,8 +53,7 @@ module Sandbox
     def install_gemrc
       filename = File.join(target, '.gemrc')
       template = File.read(File.dirname(__FILE__) + '/templates/gemrc.erb')
-      script = ERB.new(template)
-      output = script.result(binding)
+      output = ERB.new(template).result(binding)
 
       File.open(filename, 'w') do |f|
         f.write output
@@ -64,8 +63,7 @@ module Sandbox
     def install_scripts
       filename = File.join(target, 'bin', 'activate')
       template = File.read(File.dirname(__FILE__) + '/templates/activate.erb')
-      script = ERB.new(template)
-      output = script.result(binding)
+      output = ERB.new(template).result(binding)
 
       File.open(filename, 'w') do |f|
         f.write output
