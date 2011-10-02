@@ -1,5 +1,4 @@
-
-require File.dirname( __FILE__ ) + '/../spec_helper.rb'
+require 'spec_helper'
 
 describe 'new', Sandbox::Error do
   it "should wrap it's message with 'Sandbox error'" do
@@ -18,12 +17,12 @@ describe 'new', Sandbox::ParseError do
     Sandbox::ParseError.new( 'testing', [ 1, 2, 3, 4 ] ).
         message.should =~ /testing => 1 2 3 4/
   end
-  
+
   it "should accept reason with string" do
     Sandbox::ParseError.new( 'testing', "1, 2, 3, 4" ).
         message.should =~ /testing => 1, 2, 3, 4/
   end
-  
+
   it "should fall back to reason alone" do
     Sandbox::ParseError.new( 'testing', [] ).
         message.should =~ /testing$/
@@ -31,4 +30,3 @@ describe 'new', Sandbox::ParseError do
         message.should =~ /testing$/
   end
 end
-
