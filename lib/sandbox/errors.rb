@@ -6,11 +6,9 @@ module Sandbox
     end
 
     def message
-      out = []
-      value = super
-      out << "Sandbox error: #{value}"
-      out.concat( backtrace.collect { |bt| "    #{bt}" } ) if Sandbox.really_verbose?
-      out.join( "\n" )
+      out = ["Sandbox error: #{super}"]
+      out.concat(backtrace.collect { |bt| "    #{bt}" }) if Sandbox.really_verbose?
+      out.join("\n")
     end
 
   end
