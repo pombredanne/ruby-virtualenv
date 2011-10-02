@@ -1,3 +1,10 @@
+v0.5.0 Forked and renamed the project
+  Current rubygem name "sandbox" has already been taken, so we have
+  renamed the project to "ruby-virtualenv".
+
+  Cleaned and refactored code.
+
+  Updated gem stuff.
 
 v0.2.0 Functional basic version.
   Requires rubygems and only installs environment (with optional gem installs).

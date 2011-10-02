@@ -116,7 +116,7 @@ module Sandbox
         o.on('-v', '--verbose', 'Show more output. (multiple allowed)') { |f| Sandbox.increase_verbosity }
         o.on_tail('-h', '--help', 'Show this help message and exit.') { tell_unless_really_quiet( o ); exit }
         o.on_tail('-H', '--long-help', 'Show the full description about the program.') { tell_unless_really_quiet( long_help ); exit }
-        o.on_tail('-V', '--version', 'Display the program version and exit.' ) { tell_unless_really_quiet( Sandbox::Version::STRING ); exit }
+        o.on_tail('-V', '--version', 'Display the program version and exit.' ) { tell_unless_really_quiet( Sandbox::VERSION ); exit }
         o.separator ""
       end
     end

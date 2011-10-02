@@ -97,7 +97,7 @@ describe Sandbox::CLI do
       describe "using VALID arguments" do
         [ '-V', '--version' ].each do |arg|
           it "should print the version for switch '#{arg}'" do
-            @cli.expects( :tell_unless_really_quiet ).with( Sandbox::Version::STRING )
+            @cli.expects( :tell_unless_really_quiet ).with( Sandbox::VERSION )
             processor( arg ).should raise_error( SystemExit ) { |error| error.status.should == 0 }
           end
         end
@@ -105,7 +105,7 @@ describe Sandbox::CLI do
         [ '-V', '--version' ].each do |arg|
           it "should ignore additional arguments after '#{arg}'" do
             # @cli.stubs(:puts)
-            @cli.expects( :tell_unless_really_quiet ).with( Sandbox::Version::STRING ).times(2)
+            @cli.expects( :tell_unless_really_quiet ).with( Sandbox::VERSION ).times(2)
             processor( arg, '-x' ).should raise_error( SystemExit ) { |error| error.status.should == 0 }
             processor( arg, 'unknown' ).should raise_error( SystemExit ) { |error| error.status.should == 0 }
           end
