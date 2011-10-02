@@ -7,7 +7,6 @@ module Sandbox
     extend Sandbox::Output
 
     DEFAULTS = {
-      # :gems => [ 'rake', ]
       :gems => []
     }
 
@@ -102,22 +101,22 @@ module Sandbox
     def create_parser
       OptionParser.new do |o|
         o.set_summary_indent('  ')
-        o.program_name = 'sandbox TARGET'
-        o.define_head "Create virtual ruby/rubygems sandboxes."
+        o.program_name = 'ruby-virtualenv TARGET'
+        o.define_head "Create virtual ruby/rubygems environments."
         o.separator ""
-        
+
         o.separator "ARGUMENTS:"
-        o.separator "  TARGET      Target path to new sandbox.  Must not exist beforehand."
+        o.separator "  TARGET      Target path to new virtualenv. Must not exist beforehand."
         o.separator ""
-        
+
         o.separator "OPTIONS"
-        o.on( '-g', '--gems gem1,gem2', Array, 'Gems to install after sandbox is created.' ) { |gems| @options[ :gems ] = gems }
-        o.on( '-n', '--no-gems', 'Do not install any gems after sandbox is created.' ) { @options[ :gems ] = [] }
-        o.on( '-q', '--quiet', 'Show less output. (multiple allowed)' ) { |f| Sandbox.decrease_verbosity }
-        o.on( '-v', '--verbose', 'Show more output. (multiple allowed)' ) { |f| Sandbox.increase_verbosity }
-        o.on_tail( '-h', '--help', 'Show this help message and exit.' ) { tell_unless_really_quiet( o ); exit }
-        o.on_tail( '-H', '--long-help', 'Show the full description about the program' ) { tell_unless_really_quiet( long_help ); exit }
-        o.on_tail( '-V', '--version', 'Display the program version and exit.' ) { tell_unless_really_quiet( Sandbox::Version::STRING ); exit }
+        o.on('-g', '--gems gem1,gem2', Array, 'Gems to install after virtualenv is created.') { |gems| @options[:gems] = gems }
+        o.on('-n', '--no-gems', 'Do not install any gems after virtualenv is created.') { @options[:gems] = [] }
+        o.on('-q', '--quiet', 'Show less output. (multiple allowed)') { |f| Sandbox.decrease_verbosity }
+        o.on('-v', '--verbose', 'Show more output. (multiple allowed)') { |f| Sandbox.increase_verbosity }
+        o.on_tail('-h', '--help', 'Show this help message and exit.') { tell_unless_really_quiet( o ); exit }
+        o.on_tail('-H', '--long-help', 'Show the full description about the program.') { tell_unless_really_quiet( long_help ); exit }
+        o.on_tail('-V', '--version', 'Display the program version and exit.' ) { tell_unless_really_quiet( Sandbox::Version::STRING ); exit }
         o.separator ""
       end
     end
@@ -155,7 +154,7 @@ module Sandbox
         Activating your sandbox environment will change your HOME directory
         temporarily to the sandbox directory.  Other environment variables are set to
         enable this funtionality, so if you may experience odd behavior.  Everything
-        should be reset when you deactivate the sandbox.
+        should be reset when you deactivate the virtualenv.
       HELP
     end
 
