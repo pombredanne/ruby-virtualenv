@@ -122,45 +122,45 @@ module Sandbox
     end
 
     def long_help
-      unindent( <<-HELP )
-      --------------------------------------------------------------------------------
-        Sandbox is a utility to create sandboxed Ruby/Rubygems environments.
-        
-        It is meant to address the following issues:
-        1. Conflicts with unspecified gem dependency versions.
-        2. Applications can have their own gem repositories.
-        3. Permissions for installing your own gems.
-        4. Ability to try gems out without installing into your global repository.
-        5. A Simple way to enable this.
-        
-        Running from your own gem repositories is fairly straight-forward, but 
-        managing the necessary environment is a pain.  This utility will create a new
-        environment which may be activated by the script `bin/activate_sandbox` in
-        your sandbox directory.
-        
-        Run the script with the following to enable your new environment:
-          $ source bin/activate_sandbox
-        
-        When you want to leave the environment:
-          $ deactivate
-        
-        NOTES:
-        1. It creates an environment that has its own installation directory for Gems.
-        2. It doesn't share gems with other sandbox environments.
-        3. It (optionally) doesn't use the globally installed gems either.
-        4. It will use a local to the sandbox .gemrc file
-        
-        WARNINGS:
-        Activating your sandbox environment will change your HOME directory
-        temporarily to the sandbox directory.  Other environment variables are set to
-        enable this funtionality, so if you may experience odd behavior.  Everything
-        should be reset when you deactivate the virtualenv.
-      HELP
-    end
+      <<-HELP
+Sandbox is a utility to create sandboxed Ruby/Rubygems environments.
 
-    def unindent(output)
-      indent = output[/\A\s*/]
-      output.strip.gsub(/^#{indent}/, "")
+It is meant to address the following issues:
+
+  1. Conflicts with unspecified gem dependency versions.
+  2. Applications can have their own gem repositories.
+  3. Permissions for installing your own gems.
+  4. Ability to try gems out without installing into your global repository.
+  5. A Simple way to enable this.
+
+Running from your own gem repositories is fairly straight-forward, but 
+managing the necessary environment is a pain.  This utility will create a new
+environment which may be activated by the script `bin/activate_sandbox` in
+your sandbox directory.
+
+Run the script with the following to enable your new environment:
+
+  $ source bin/activate
+
+When you want to leave the environment:
+
+  $ deactivate
+
+NOTES:
+
+  1. It creates an environment that has its own installation directory for Gems.
+  2. It doesn't share gems with other sandbox environments.
+  3. It (optionally) doesn't use the globally installed gems either.
+  4. It will use a local to the sandbox .gemrc file
+
+WARNINGS:
+
+  Activating your sandbox environment will change your HOME directory
+  temporarily to the sandbox directory. Other environment variables are set to
+  enable this funtionality, so if you may experience odd behavior. Everything
+  should be reset when you deactivate the virtualenv.
+
+      HELP
     end
 
     private
