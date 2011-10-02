@@ -14,7 +14,7 @@ end
 
 describe 'new', Sandbox::ParseError do
   it "should accept reason with array" do
-    Sandbox::ParseError.new('testing', [ 1, 2, 3, 4 ]).message.should =~ /testing => 1 2 3 4/
+    Sandbox::ParseError.new('testing', [1, 2, 3, 4]).message.should =~ /testing => 1 2 3 4/
   end
 
   it "should accept reason with string" do
