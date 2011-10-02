@@ -79,7 +79,7 @@ describe Sandbox::CLI do
     end
     
     it "should have no default 'gems to install'" do
-      @cli.options[ :gems ].should == []
+      @cli.options[:gems].should == []
     end
     
     describe "instance calling parse_args!" do
@@ -89,8 +89,8 @@ describe Sandbox::CLI do
       describe "using NO arguments" do
         it "should use raise nothing" do
           process()
-          @cli.options[ :original_args ].should == []
-          @cli.options[ :args ].should == []
+          @cli.options[:original_args].should == []
+          @cli.options[:args].should == []
         end
       end
   
@@ -133,59 +133,59 @@ describe Sandbox::CLI do
             processor(arg).should raise_error(SystemExit) { |error| error.status.should == 0 }
           end
         end
-          
+
         [ '-v', '--verbose' ].each do |arg|
           it "should increase verbosity with '#{arg}'" do
             Sandbox.expects(:increase_verbosity)
             process(arg)
-            @cli.options[ :original_args ].should == [ arg ]
-            @cli.options[ :args ].should == []
+            @cli.options[:original_args].should == [arg]
+            @cli.options[:args].should == []
           end
         end
-        
-        [ [ '-v', '-v' ], [ '--verbose', '--verbose' ] ].each do |args|
+
+        [['-v', '-v'], ['--verbose', '--verbose'] ].each do |args|
           it "should increase verbosity twice with '#{args.join(' ')}'" do
             Sandbox.expects(:increase_verbosity).times(2)
             process(*args)
-            @cli.options[ :original_args ].should == args
-            @cli.options[ :args ].should == []
+            @cli.options[:original_args].should == args
+            @cli.options[:args].should == []
           end
         end
-        
+
         it "should require additional arguments with switch '-g'" do
           processor('-g').should raise_error(Sandbox::ParseError)
         end
-        
+
         it "should set 'gems to install' with switch '-g'" do
-          args = [ '-g', 'somegem,anothergem' ]
+          args = ['-g', 'somegem,anothergem']
           process(*args)
-          @cli.options[ :original_args ].should == args
-          @cli.options[ :args ].should == []
-          @cli.options[ :gems ].should == [ 'somegem', 'anothergem' ]
+          @cli.options[:original_args].should == args
+          @cli.options[:args].should == []
+          @cli.options[:gems].should == ['somegem', 'anothergem']
         end
-        
+
         it "should clear 'gems to install' with switch '-n'" do
           process('-n')
-          @cli.options[ :original_args ].should == [ '-n' ]
-          @cli.options[ :args ].should == []
-          @cli.options[ :gems ].should == []
+          @cli.options[:original_args].should == ['-n']
+          @cli.options[:args].should == []
+          @cli.options[:gems].should == []
         end
-        
+
         it "should store leftover arguments in options for arguments '/path/to/somewhere'" do
-          args = [ '/path/to/somewhere' ]
+          args = ['/path/to/somewhere']
           process(*args)
-          @cli.options[ :original_args ].should == args
-          @cli.options[ :args ].should == args
+          @cli.options[:original_args].should == args
+          @cli.options[:args].should == args
         end
         
         it "should store leftover arguments in options for arguments '-v /path/to/somewhere'" do
-          args = [ '-v', '/path/to/somewhere' ]
+          args = ['-v', '/path/to/somewhere']
           process(*args)
-          @cli.options[ :original_args ].should == args
-          @cli.options[ :args ].should == [ args.last ]
+          @cli.options[:original_args].should == args
+          @cli.options[:args].should == [args.last]
         end
       end
-  
+
       describe "using INVALID arguments" do
         it "should exit with message for invalid switch '-x'" do
           processor('-x').
@@ -193,31 +193,31 @@ describe Sandbox::CLI do
         end
       end
     end
-    
+
     describe "instance calling execute!" do
       def processor; lambda { @cli.execute! }; end
       def process; processor.call; end
-      
+
       it "should raise error with no target specified" do
-        @cli.options[ :args ] = []
+        @cli.options[:args] = []
         processor.should raise_error
       end
-      
+
       it "should raise error with more than one target" do
-        @cli.options[ :args ] = [ 'one', 'two' ]
+        @cli.options[:args] = ['one', 'two']
         processor.should raise_error
       end
-      
+
       it "should instantiate an Installer and call populate with one target" do
         @cli.options.delete(:gems)
-        @cli.options[ :args ] = [ 'one' ]
+        @cli.options[:args] = ['one']
         installer = mock('Installer', :populate)
-        Sandbox::Installer.expects(:new).with({ :target => 'one' }).returns(installer)
+        Sandbox::Installer.expects(:new).with({:target=>'one'}).returns(installer)
         process
       end
-      
+
     end
-    
+
     describe "instance calling long_help" do
       it "should return a long descriptive string" do
         @cli.long_help.split("\n").size.should be > 20
@@ -227,8 +227,7 @@ describe Sandbox::CLI do
         @cli.long_help.should =~ /WARNINGS:/
       end
     end
-    
-  end
-  
-end
 
+  end
+
+end

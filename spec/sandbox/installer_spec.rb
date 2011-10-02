@@ -1,23 +1,21 @@
 require 'spec_helper'
 
 describe Sandbox::Installer, "(mocked)" do
-  
+
   before(:each) do
     Sandbox.instance_eval { instance_variables.each { |v| remove_instance_variable v } }
   end
-  
+
   describe "creating an instance" do
-    # initialize(options={})
     it "should set it's options" do
       opts = { :somewhere => true, :nowhere => false }
       installer = Sandbox::Installer.new(opts)
-      installer.options[ :somewhere ].should be_true
-      installer.options[ :nowhere ].should be_false
+      installer.options[:somewhere].should be_true
+      installer.options[:nowhere].should be_false
     end
   end
-  
+
   describe "instance" do
-    # target
     describe "when target called" do
       it "should validate target directory once" do
         path = '/some/new/target'
@@ -29,7 +27,6 @@ describe Sandbox::Installer, "(mocked)" do
       end
     end
 
-    # populate
     describe "when populate called" do
       it "should call all steps of populate process" do
         @installer = Sandbox::Installer.new
@@ -43,7 +40,6 @@ describe Sandbox::Installer, "(mocked)" do
       end
     end
 
-    # create_directories
     describe "when create_directories called" do
       before(:each) do
         @path = '/some/new/target'
@@ -63,20 +59,19 @@ describe Sandbox::Installer, "(mocked)" do
       end
     end
 
-    # install_scripts
     describe "when install_scripts called" do
       before(:each) do
         @path = '/some/new/target'
         @installer = Sandbox::Installer.new
         @installer.stubs(:target).returns(@path)
       end
-      
+
       it "should read template file" do
         File.expects(:read).with(regexp_matches(/templates\/activate\.erb/)).returns('<%= target %>')
         File.stubs(:open)
         @installer.install_scripts
       end
-      
+
       it "should write out activate script to SANDBOX/bin/activate" do
         file = StringIO.new
         File.stubs(:read).returns('<%= target %>')
@@ -85,21 +80,20 @@ describe Sandbox::Installer, "(mocked)" do
         file.string.should == @path
       end
     end
-    
-    # install_gemrc
+
     describe "when install_gemrc called" do
       before(:each) do
         @path = '/some/new/target'
         @installer = Sandbox::Installer.new
         @installer.stubs(:target).returns(@path)
       end
-      
+
       it "should read template file" do
         File.expects(:read).with(regexp_matches(/templates\/gemrc\.erb/)).returns('')
         File.stubs(:open)
         @installer.install_gemrc
       end
-      
+
       it "should write out gemrc to SANDBOX/.gemrc" do
         file = StringIO.new
         File.stubs(:read).returns('gemrc')
@@ -109,7 +103,6 @@ describe Sandbox::Installer, "(mocked)" do
       end
     end
 
-    # install_gems
     describe "when install_gems called" do
       before(:each) do
         @installer = Sandbox::Installer.new(:gems => [ 'mygem' ])
@@ -118,17 +111,17 @@ describe Sandbox::Installer, "(mocked)" do
         @installer.stubs(:tell)
         @installer.stubs(:tell_unless_really_quiet)
       end
-      
-      # it "should skip install when network is not available" do
-      #   Ping.expects(:pingecho).with('gems.rubyforge.org').returns(false)
-      #   @installer.install_gems.should be_false
-      # end
-      
+
+      xit "should skip install when network is not available" do
+        Ping.expects(:pingecho).with('gems.rubyforge.org').returns(false)
+        @installer.install_gems.should be_false
+      end
+
       it "should install a good gem" do
         @installer.expects(:shell_out).with('gem install mygem').returns([ true, 'blah' ])
         @installer.install_gems
       end
-      
+
       it "should gracefully handle a bad gem" do
         @installer.expects(:shell_out).with('gem install mygem').returns([ false, 'blah' ])
         @installer.expects(:tell_unless_really_quiet).with(regexp_matches(/failed/))
@@ -136,25 +129,24 @@ describe Sandbox::Installer, "(mocked)" do
       end
     end
 
-    # resolve_target(path)
     describe "when resolve_target called" do
       before(:each) do
         @path = '/absolute/path/to/parent'
         @installer = Sandbox::Installer.new
         @installer.stubs(:fix_path).returns(@path)
       end
-      
+
       it "should raise error when it path exists" do
         File.expects(:exists?).with(@path).returns(true)
         lambda { @installer.resolve_target(@path) }.should raise_error(Sandbox::Error)
       end
-      
+
       it "should return path when parent directory passes check_path!" do
         File.expects(:exists?).with(@path).returns(false)
         @installer.expects(:check_path!).with('/absolute/path/to').returns(true)
         @installer.resolve_target(@path).should == @path
       end
-      
+
       it "should return path when any parent directory passes check_path!" do
         File.expects(:exists?).with(@path).returns(false)
         @installer.expects(:check_path!).with('/absolute/path/to').returns(false)
@@ -162,7 +154,7 @@ describe Sandbox::Installer, "(mocked)" do
         @installer.expects(:check_path!).with('/absolute').returns(true)
         @installer.resolve_target(@path).should == @path
       end
-      
+
       it "should have emergency safeguard for dirname on root" do
         @installer.stubs(:fix_path).returns('/absolute')
         @installer.expects(:check_path!).with('/').returns(false)
@@ -170,31 +162,30 @@ describe Sandbox::Installer, "(mocked)" do
       end
     end
 
-    # check_path!(path)
     describe "when check_path! called" do
       before(:each) do
         @path = '/absolute/path/to/parent'
         @installer = Sandbox::Installer.new
       end
-      
+
       it "should raise error when it is not writable" do
         File.expects(:directory?).with(@path).returns(true)
         File.expects(:writable?).with(@path).returns(false)
         lambda { @installer.check_path!(@path) }.should raise_error(Sandbox::Error)
       end
-      
+
       it "should raise error when it is not a directory" do
         File.expects(:directory?).with(@path).returns(false)
         File.expects(:exists?).with(@path).returns(true)
         lambda { @installer.check_path!(@path) }.should raise_error(Sandbox::Error)
       end
-      
+
       it "should return false when it doesn't exist" do
         File.expects(:directory?).with(@path).returns(false)
         File.expects(:exists?).with(@path).returns(false)
         @installer.check_path!(@path).should be_false
       end
-      
+
       it "should return true when it can be created" do
         File.expects(:directory?).with(@path).returns(true)
         File.expects(:writable?).with(@path).returns(true)
@@ -202,14 +193,13 @@ describe Sandbox::Installer, "(mocked)" do
       end
     end
 
-    # fix_path(path)
     describe "when fix_path called" do
       it "should not change absolute path" do
         path = '/absolute/path/to/target'
         @installer = Sandbox::Installer.new
         @installer.fix_path(path).should == path
       end
-      
+
       it "should make relative into absolute path" do
         abs_path = '/absolute/working/directory'
         path = 'relative/path/to/target'
@@ -218,34 +208,34 @@ describe Sandbox::Installer, "(mocked)" do
         @installer.fix_path(path).should == abs_path + '/' + path
       end
     end
-    
-    # shell_out(cmd)
+
+
     describe "when shell_out called" do
       it "should record true when successful" do
         @installer = Sandbox::Installer.new
         result = @installer.shell_out('true')
         result.first.should be_true
       end
-      
+
       it "should record false when unsuccessful" do
         @installer = Sandbox::Installer.new
         result = @installer.shell_out('false')
         result.first.should_not be_true
       end
-      
+
       it "should record std output" do
         @installer = Sandbox::Installer.new
         result = @installer.shell_out('ls -d /')
         result.last.chomp.should == '/'
       end
-      
+
       it "should ignore std error" do
         @installer = Sandbox::Installer.new
         result = @installer.shell_out('ls -d / 1>/dev/null')
         result.last.chomp.should == ''
       end
     end
-    
+
     describe "setup and restore sandbox env called" do
       it "should set and restore the environment" do
         orig_home = ENV[ 'HOME' ]
@@ -253,7 +243,7 @@ describe Sandbox::Installer, "(mocked)" do
         orig_gem_path = ENV[ 'GEM_PATH' ]
         @installer = Sandbox::Installer.new
         @installer.stubs(:target).returns('dummypath')
-        
+
         @installer.setup_sandbox_env
         ENV[ 'HOME' ].should == 'dummypath'
         ENV[ 'GEM_HOME' ].should == 'dummypath/rubygems'
@@ -264,13 +254,23 @@ describe Sandbox::Installer, "(mocked)" do
         ENV[ 'GEM_PATH' ].should == orig_gem_path
       end
     end
+
   end
 end
 
 describe Sandbox::Installer, "(using tmpdir)" do
-  def tmppath() File.join(Dir.tmpdir, "sandbox_testing") end
-  def rmtmppath() FileUtils.rm_rf(tmppath) end
-  def mktmppath() FileUtils.mkdir_p(tmppath) end
+
+  def tmppath
+    File.join(Dir.tmpdir, "sandbox_testing")
+  end
+
+  def rmtmppath
+    FileUtils.rm_rf(tmppath)
+  end
+
+  def mktmppath
+    FileUtils.mkdir_p(tmppath)
+  end
 
   def in_dir(dir = tmppath)
     old_pwd = Dir.pwd
@@ -281,15 +281,15 @@ describe Sandbox::Installer, "(using tmpdir)" do
       Dir.chdir(old_pwd)
     end
   end
-  
+
   before(:each) do
     mktmppath
   end
-  
+
   after(:each) do
     rmtmppath
   end
-  
+
   it "should create target directory structure" do
     target = tmppath + '/target'
     @installer = Sandbox::Installer.new(:target => target)
@@ -297,7 +297,5 @@ describe Sandbox::Installer, "(using tmpdir)" do
     File.directory?(target + '/rubygems/bin').should be_true
     File.symlink?(target + '/bin').should be_true
   end
+
 end
-
-
-  

@@ -74,7 +74,7 @@ module Sandbox
         raise Sandbox::Error.new('multiple targets specified - see `ruby-virtualenv --help` for assistance')
       end
 
-      options[ :target ] = targets[0]
+      options[:target] = targets[0]
 
       Sandbox::Installer.new(options).populate
     end
