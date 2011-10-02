@@ -1,81 +1,77 @@
-
 require 'fileutils'
-# require 'ping'
-# require 'timeout'
 require 'erb'
 
 module Sandbox
-  
   class Installer
     include Sandbox::Output
     extend Sandbox::Output
-    
-    ## CLASS METHODS
+
     class << self
     end
-    ## END CLASS METHODS
-    
+
     attr_accessor :options
-    
-    ## PUBLIC INSTANCE METHODS
-    public
-    
-    def initialize( options={} )
+
+    def initialize(options={})
       @options = options.dup
       @target = nil
     end
-    
+
     def target
       return @target unless @target.nil?
-      @target = resolve_target( options[ :target ] )
+      @target = resolve_target(options[:target])
     end
-    
+
     def populate
-      tell( "creating sandbox at: #{target}" )
+      tell("creating sandbox at: #{target}")
       create_directories
-      tell( "installing activation script" )
+      tell("installing activation script")
       install_scripts
-      tell( "installing .gemrc" )
+      tell("installing .gemrc")
       install_gemrc
-      tell( "installing gems" )
+      tell("installing gems")
       install_gems
     end
-    
+
+    ##
+    # Create folders:
+    #
+    #     mkdir -p /path/to/sandbox/rubygems/bin
+    #
+    # Symlink the bin directory, because when gems are installed, binaries
+    # are installed in GEM_HOME/bin:
+    #
+    #     $ ln -s /path/to/sandbox/rubygems/bin /path/to/sandbox/bin
+    #
     def create_directories
-      bin = File.join( target, 'bin' )
-      gembin = File.join( target, 'rubygems', 'bin' )
-      
-      # mkdir /path/to/sandbox/
-      # mkdir /path/to/sandbox/rubygems
-      # mkdir /path/to/sandbox/rubygems/bin
-      FileUtils.mkdir_p( gembin )
-      
-      # ln -s /path/to/sandbox/rubygems/bin /path/to/sandbox/bin
-      # symlink the bin directory, because when gems are installed, binaries are
-      # installed in GEM_HOME/bin
+      gembin = File.join(target, 'rubygems', 'bin')
+      FileUtils.mkdir_p(gembin)
+
+      bin = File.join(target, 'bin')
       FileUtils.ln_s( gembin, bin )
     end
-    
+
     def install_gemrc
-      filename = File.join( target, '.gemrc' )
-      template = File.read( File.dirname( __FILE__ ) + '/templates/gemrc.erb' )
-      script = ERB.new( template )
-      output = script.result( binding )
-      File.open( filename, 'w' ) do |f|
+      filename = File.join(target, '.gemrc')
+      template = File.read(File.dirname( __FILE__ ) + '/templates/gemrc.erb')
+      script = ERB.new(template)
+      output = script.result(binding)
+
+      File.open(filename, 'w') do |f|
         f.write output
       end
     end
-    
+
     def install_scripts
-      filename = File.join( target, 'bin', 'activate_sandbox' )
-      template = File.read( File.dirname( __FILE__ ) + '/templates/activate_sandbox.erb' )
-      script = ERB.new( template )
-      output = script.result( binding )
-      File.open( filename, 'w' ) do |f|
+      filename = File.join(target, 'bin', 'activate')
+      template = File.read(File.dirname( __FILE__ ) + '/templates/activate.erb')
+      script = ERB.new(template)
+      output = script.result(binding)
+
+      File.open(filename, 'w') do |f|
         f.write output
       end
     end
-    
+
     def install_gems
       # gem = `which gem`.chomp
       # return if gem.empty?

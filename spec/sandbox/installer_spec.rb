@@ -72,15 +72,15 @@ describe Sandbox::Installer, "(mocked)" do
       end
       
       it "should read template file" do
-        File.expects( :read ).with( regexp_matches( /templates\/activate_sandbox\.erb/ ) ).returns( '<%= target %>' )
+        File.expects( :read ).with( regexp_matches( /templates\/activate\.erb/ ) ).returns( '<%= target %>' )
         File.stubs( :open )
         @installer.install_scripts
       end
       
-      it "should write out activate script to SANDBOX/bin/activate_sandbox" do
+      it "should write out activate script to SANDBOX/bin/activate" do
         file = StringIO.new
         File.stubs( :read ).returns( '<%= target %>' )
-        File.expects( :open ).with( @path + '/bin/activate_sandbox', 'w' ).yields( file )
+        File.expects( :open ).with( @path + '/bin/activate', 'w' ).yields( file )
         @installer.install_scripts
         file.string.should == @path
       end

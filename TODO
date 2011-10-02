@@ -41,12 +41,12 @@ TODO: perhaps the following could be added to the activate script???
       #   ## ZSH source check
       #   test -n "$ZSH_NAME" -a "$HISTCMD" = "0" && return 0
       #   ## BASH source check
-      #   test "`basename $1 2>/dev/null`" = "activate_sandbox" && return 0
+      #   test "`basename $1 2>/dev/null`" = "activate" && return 0
       #   ## script was not sourced
       #   return 1
       # }
       # function exit_with_warning() {
-      #   echo "You must source this script (ie. source bin/activate_sandbox)"
+      #   echo "You must source this script (ie. source bin/activate)"
       #   exit 1
       # }
       # not_sourced $0 && exit_with_warning

@@ -135,7 +135,7 @@ It is meant to address the following issues:
 
 Running from your own gem repositories is fairly straight-forward, but 
 managing the necessary environment is a pain.  This utility will create a new
-environment which may be activated by the script `bin/activate_sandbox` in
+environment which may be activated by the script `bin/activate` in
 your sandbox directory.
 
 Run the script with the following to enable your new environment:
