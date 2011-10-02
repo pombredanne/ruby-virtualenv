@@ -68,14 +68,6 @@ Create a new sandbox with specific gems:
       gem: rake
       gem: rails
 
-FUTURE PLANS:
--------------
-
-I hope to expand the full version branch to allow for installing both
-rubygems and ruby as part of the sandbox. This would enable experimentation
-with different versions of both and exclude the requirement on needing
-rubygems in the first place.
-
 REQUIREMENTS:
 -------------
 
