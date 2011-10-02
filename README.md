@@ -51,10 +51,6 @@ Create a new virtualenv (verbose output by default):
     installing gems:
       nothing to do
 
-Create a new sandbox with no output:
-
-    $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox -q
-
 Create a new sandbox with specific gems:
 
     $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox -g rake,rails
