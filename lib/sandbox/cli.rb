@@ -52,9 +52,6 @@ module Sandbox
     end
     ## END CLASS METHODS
 
-    ## PUBLIC INSTANCE METHODS
-    public
-
     # The options for this execution.
     attr_reader :options
 
@@ -163,11 +160,10 @@ WARNINGS:
       HELP
     end
 
-    private
-
     def raise_parse_error(reason, args=[])
       raise Sandbox::ParseError.new(reason, args)
     end
+    private :raise_parse_error
 
   end
 end
