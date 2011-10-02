@@ -25,13 +25,14 @@ module Sandbox
   class ParseError < Sandbox::Error
 
     def initialize(reason=nil, args=[])
-      if args.is_a?(Array) and args.size > 0
-        msg = "#{reason} => #{args.join( ' ' )}"
-      elsif args.is_a?(String) and args.length > 0
-        msg = "#{reason} => #{args}"
+      msg = if args.is_a?(Array) && args.size > 0
+        "#{reason} => #{args.join( ' ' )}"
+      elsif args.is_a?(String) && args.length > 0
+        "#{reason} => #{args}"
       else
-        msg = reason
+        reason
       end
+
       super(msg)
     end
 
