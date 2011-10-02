@@ -111,7 +111,6 @@ module Sandbox
     end
 
     def restore_sandbox_env
-      # ENV.update(@old_env)
       ENV['HOME']     = @old_env['HOME']
       ENV['GEM_HOME'] = @old_env['GEM_HOME']
       ENV['GEM_PATH'] = @old_env['GEM_PATH']
