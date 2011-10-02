@@ -14,4 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "ruby-virtualenv"
   gem.require_paths = ["lib"]
   gem.version       = Sandbox::VERSION
+
+  gem.add_development_dependency "rspec", "~> 2.6.0"
+  gem.add_development_dependency "mocha", "~> 0.10.0"
 end
