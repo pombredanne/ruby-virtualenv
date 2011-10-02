@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Sandbox do
 
-  before( :each ) do
+  before(:each) do
     Sandbox.instance_eval { instance_variables.each { |v| remove_instance_variable(v) } }
   end
 

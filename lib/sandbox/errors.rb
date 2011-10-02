@@ -23,7 +23,7 @@ module Sandbox
 
     def initialize(reason=nil, args=[])
       msg = if args.is_a?(Array) && args.size > 0
-        "#{reason} => #{args.join( ' ' )}"
+        "#{reason} => #{args.join(' ')}"
       elsif args.is_a?(String) && args.length > 0
         "#{reason} => #{args}"
       else

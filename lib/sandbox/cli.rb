@@ -41,7 +41,7 @@ module Sandbox
             tell_unless_really_quiet(error.message)
           when StandardError #, Timeout::Error
             tell_unless_really_quiet("Error: #{error.message}")
-            tell_when_really_verbose(error.backtrace.collect { |bt| "    #{bt}" }.join( "\n" )) if error.backtrace
+            tell_when_really_verbose(error.backtrace.collect { |bt| "    #{bt}" }.join("\n")) if error.backtrace
           when Interrupt
             tell_unless_really_quiet("Interrupted")
         else
@@ -85,7 +85,7 @@ module Sandbox
     # * determine command name to lookup in CommandManager
     # * load command and have it process any add't options
     # * catches exceptions for unknown switches or commands
-    def parse_args!( args )
+    def parse_args!(args)
       options[:original_args] = args.dup
       parser.parse!(args)
     rescue OptionParser::ParseError => ex
@@ -114,9 +114,9 @@ module Sandbox
         o.on('-n', '--no-gems', 'Do not install any gems after virtualenv is created.') { @options[:gems] = [] }
         o.on('-q', '--quiet', 'Show less output. (multiple allowed)') { |f| Sandbox.decrease_verbosity }
         o.on('-v', '--verbose', 'Show more output. (multiple allowed)') { |f| Sandbox.increase_verbosity }
-        o.on_tail('-h', '--help', 'Show this help message and exit.') { tell_unless_really_quiet( o ); exit }
-        o.on_tail('-H', '--long-help', 'Show the full description about the program.') { tell_unless_really_quiet( long_help ); exit }
-        o.on_tail('-V', '--version', 'Display the program version and exit.' ) { tell_unless_really_quiet( Sandbox::VERSION ); exit }
+        o.on_tail('-h', '--help', 'Show this help message and exit.') { tell_unless_really_quiet(o); exit }
+        o.on_tail('-H', '--long-help', 'Show the full description about the program.') { tell_unless_really_quiet(long_help); exit }
+        o.on_tail('-V', '--version', 'Display the program version and exit.') { tell_unless_really_quiet(Sandbox::VERSION); exit }
         o.separator ""
       end
     end
