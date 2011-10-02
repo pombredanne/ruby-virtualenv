@@ -34,6 +34,11 @@ Notes
 * It (optionally) doesn't use the globally installed gems either.
 * It will use a local to the sandbox .gemrc file
 
+Install
+-------
+
+    $ gem install ruby-virtualenv
+
 Usage
 -----
 
@@ -59,11 +64,6 @@ Create a new sandbox with specific gems:
     installing gems:
       gem: rake
       gem: rails
-
-Install
--------
-
-    $ gem install ruby-virtualenv
 
 License
 -------
