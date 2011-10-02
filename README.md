@@ -45,7 +45,7 @@ Usage
 Create a new virtualenv (verbose output by default):
 
     $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox
-    creating new sandbox in /home/nkryptic/ruby-projects/my-new-sandbox
+    creating new sandbox in ~/.ruby-virtualenvs/my-new-sandbox
     installing activation script
     installing .gemrc
     installing gems:
@@ -58,7 +58,7 @@ Create a new sandbox with no output:
 Create a new sandbox with specific gems:
 
     $ ruby-virtualenv ~/.ruby-virtualenvs/my-new-sandbox -g rake,rails
-    creating new sandbox in /home/nkryptic/ruby-projects/my-new-sandbox
+    creating new sandbox in ~/.ruby-virtualenvs/my-new-sandbox
     installing activation script
     installing .gemrc
     installing gems:
