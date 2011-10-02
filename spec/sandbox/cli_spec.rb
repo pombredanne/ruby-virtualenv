@@ -221,8 +221,8 @@ describe Sandbox::CLI do
     describe "instance calling long_help" do
       it "should return a long descriptive string" do
         @cli.long_help.split( "\n" ).size.should be > 20
-        @cli.long_help.should =~ /activate_sandbox/
-        @cli.long_help.should =~ /deactivate_sandbox/
+        @cli.long_help.should =~ /activate/
+        @cli.long_help.should =~ /deactivate/
         @cli.long_help.should =~ /NOTES:/
         @cli.long_help.should =~ /WARNINGS:/
       end

@@ -149,7 +149,7 @@ module Sandbox
           $ source bin/activate_sandbox
         
         When you want to leave the environment:
-          $ deactivate_sandbox
+          $ deactivate
         
         NOTES:
         1. It creates an environment that has its own installation directory for Gems.

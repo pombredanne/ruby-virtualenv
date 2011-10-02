@@ -12,7 +12,7 @@ forget_cached_commands () {
 
 }
 
-deactivate_sandbox () {
+deactivate () {
 
     if [ -n "$_OLD_SANDBOX_GEM_HOME" ] ; then
         GEM_HOME="$_OLD_SANDBOX_GEM_HOME"
@@ -54,15 +54,15 @@ deactivate_sandbox () {
 
     if [ ! "$1" = "nondestructive" ] ; then
         # Self destruct!
-        unset deactivate_sandbox
+        unset deactivate
         unset forget_cached_commands
     fi
 }
 
-activate_sandbox () {
+activate () {
 
     # unset irrelavent variables
-    deactivate_sandbox nondestructive
+    deactivate nondestructive
 
     # preserve current variables
     _OLD_SANDBOX_GEM_HOME="$GEM_HOME"
@@ -93,6 +93,6 @@ activate_sandbox () {
 
 }
 
-activate_sandbox
+activate
 
 # Thanks to the virtualenv developers (http://pypi.python.org/pypi/virtualenv)
